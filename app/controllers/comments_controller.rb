@@ -1,15 +1,18 @@
 class CommentsController < ApplicationController
   def create
-    @post = Post.find(params[:id])
+    params.permit!
+    @post = Post.find(params[:post_id])
     @comment = @post.comments.build(params[:comment])
     @comment.save
     redirect_to @post
   end
 
+
   def edit
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
   end
+
   def update_attributes
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
@@ -18,6 +21,7 @@ class CommentsController < ApplicationController
     else
       render :action => :edit
     end
+  end
 
     def destroy
       @post = Post.find(params[:post_id])
